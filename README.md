@@ -1,7 +1,7 @@
 # BIP-39
 
 
-### Generacion de mnemonic
+## Generacion de mnemonic
 **Paso 1  Decidir el numero de palabras se quiere generar**
 
 > Pueden ser  12, 15, 18, 21 o 24 palabras.
@@ -33,6 +33,8 @@
 
 `00001100000111100010010011100101100100010111011101111001110100101001011111100001010011010100010111110001010011100001101000011010`
 
+***Se saca el checksum o hash con ayuda de sha256***
+
 `echo 00001100000111100010010011100101100100010111011101111001110100101001011111100001010011010100010111110001010011100001101000011010 | shasum -a 256 -0`
 
 > El hash que genera ***7***6e57a90f93135e97ce700a9e79196ba46315d65e696d0a4518270a8de3e80e4 osea ***0111***
@@ -46,15 +48,43 @@
 
 ***army van defense carry jealous true garbage claim echo media make crunch***
 
+## From mnemonic to seed
+
+
+> La semilla producida se usa para construir una billetera determinista y derivar sus claves. Para esto se usa la  key-stretching function PBKDF2.
+
+***army van defense carry jealous true garbage claim echo media make crunch***
+
+***nodejs***
+
+`const {
+  pbkdf2
+} = await import('crypto');
 
 
 
+pbkdf2('army van defense carry jealous true garbage claim echo media make crunch', 'mnemonic', 2048, 64, 'sha512', (err, derivedKey) => {
+  if (err) throw err;
+  console.log(derivedKey.toString('hex'));  // '3745e48...08d59ae'
+});
+
+### Seed(512 bits) 
+
+`5b56c417303faa3fcba7e57400e120a0ca83ec5a4fc9ffba757fbe63fbd77a89a1a3be4c67196f57c39a88b76373733891bfaba16ed27a813ceed498804c0570`
+
+> Siempre se usa la palabra mnemonic y para agregarle seguridad se puede poner otra cosa en este caso es un HMAC de SHA512 con 2048 rondas y que genera un string de 64 bytes o 512 bits.
+
+`
+### Wallet deterministas jerárquicas HD
+
+>Deterministic wallets were developed to make it easy to derive many keys from a single seed. Osea que permiten trabajar con derived keys en una estructura de
+>arbol osea como un abuelo padre e hijo y a su ves este tiene una jey hija. Se determina de una sola seed.
+>The second advantage of HD wallets is that users can create a sequence of public keys without having access to the corresponding private keys.
+> Meta mask es de este tipo de Wallets
 
 
+### Deterministic (Seeded) Wallets
 
-
-
-
-
+>Deterministic or "seeded" wallets are wallets that contain private keys that are all derived from a single master key, or seed.
 
 
