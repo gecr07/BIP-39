@@ -20,22 +20,31 @@
 
 > Se saca el hash de la entropia en este caso de 128 bit (12 palabras) y para llegar a poder hace grupos de 11 y sacar 12 palabras pues se requieren
 > 4 bits extra osea quedaria en 132. Entonces recapitulando sacamos el hash de la entropia y agarramos los 4 primeros bits.(Recordar que cada caracter hex son 4 bits)
+**Paso 4 Concatenar los primeros bites del hash sha256 tambien llamado checksum***
+> Se concatenan los primero bytes dependiendo de la longitud de la entropia para despues asociar cada 11 bits con su respectiva palabra de la lista de 2048
 
 **Ejemplo con Bash y Python**
 
-*python3*
+**python3**
 
-`entr='0c1e24e5917779d297e14d45f14e1a1a'` *Entropia en hexadecimal 32 bytes multiplicado por 4(de cada numero hex) nos da 128 bits*
+`entr='0c1e24e5917779d297e14d45f14e1a1a'` *Entropia en hexadecimal 32 bytes multiplicado por 4(de cada numero hex) nos da 128 bits Nota: No olvides que el 0 vale 0000 en bits el del inicio 0c*
 
-`print(bin(int(entr,16)))`  *Convertimos de hex a enteros despues a binario lo cual nos da 1100000111100010010011100101100100010111011101111001110100101001011111100001010011010100010111110001010011100001101000011010*
+`print(bin(int(entr,16)))`  *Convertimos de hex a enteros despues a binario lo cual nos da 
 
-`echo 1100000111100010010011100101100100010111011101111001110100101001011111100001010011010100010111110001010011100001101000011010 | shasum -a 256 -0`
+`00001100000111100010010011100101100100010111011101111001110100101001011111100001010011010100010111110001010011100001101000011010`
 
-> El anterior comando saca la chechsum de nuestra entropia y posteriormente le sacaremos los primero 4 bits.
+`echo 00001100000111100010010011100101100100010111011101111001110100101001011111100001010011010100010111110001010011100001101000011010 | shasum -a 256 -0`
+
+> El hash que genera ***7***6e57a90f93135e97ce700a9e79196ba46315d65e696d0a4518270a8de3e80e4 osea ***0111***
 > 
-> **6**16462856361e566d20e33fc18e3ae03578d678135e7b6007511c62418f29a31
+> El anterior comando saca la chechsum de nuestra entropia y posteriormente le sacaremos los primero 4 bits al hash que se genero tambien llamado checksum para posteriormente ponerlos al final de la entropia dando un multiplo de 11 para poder formar para este caso las 12 palabras.
 > 
+> 00001100000 11110001001 00111001011 00100010111 01110111100 11101001010 01011111100 00101001101 01000101111 10001010011 10000110100 0011010***0111***
+> 
+>  Recuerda que esto es index 0 entonces para buscar en la lista lo que te salga al pasarlo a decimal sumale uno.
+>  Las 12 palabras que corresponden a esos numeros son: 
 
+***army van defense carry jealous true garbage claim echo media make crunch***
 
 
 
