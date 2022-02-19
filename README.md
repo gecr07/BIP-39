@@ -68,6 +68,13 @@ pbkdf2('army van defense carry jealous true garbage claim echo media make crunch
   console.log(derivedKey.toString('hex'));  // '3745e48...08d59ae'
 });
 
+**Tenemos**
+
+>**El secreto(las 12 palabras)**
+>**El Pass(mnemonic)**
+>**Las rondas(2048)**
+>**La salida de la llave(64 bytes)**
+
 ### Seed(512 bits) 
 
 `5b56c417303faa3fcba7e57400e120a0ca83ec5a4fc9ffba757fbe63fbd77a89a1a3be4c67196f57c39a88b76373733891bfaba16ed27a813ceed498804c0570`
